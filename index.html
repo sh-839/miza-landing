@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>MIZA — Every Set. Every DJ. One App.</title>
+  <meta name="description" content="You already film the best moments at shows. Miza keeps them organized by artist, event, and venue so you can actually find them again.">
+  <meta property="og:title" content="MIZA — Every Set. Every DJ. One App.">
+  <meta property="og:description" content="You already film the best moments at shows. Miza keeps them organized by artist, event, and venue so you can actually find them again.">
+  <meta property="og:image" content="/miza-assets/og-image-1200x630.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0A0A0F">
+  <link rel="icon" type="image/png" sizes="32x32" href="/miza-assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/miza-assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/miza-assets/app-icon-192x192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:          #0A0A0F;
+      --bg-card:     #111118;
+      --bg-hover:    #16161f;
+      --cyan:        #00F0FF;
+      --cyan-dim:    rgba(0,240,255,0.12);
+      --cyan-glow:   rgba(0,240,255,0.25);
+      --uv:          #B000FF;
+      --white:       #FFFFFF;
+      --gray:        #8A8A9A;
+      --gray-light:  #C4C4D4;
+      --gray-dark:   #2A2A3A;
+      --border:      rgba(255,255,255,0.07);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      font-family: 'Outfit', -apple-system, sans-serif;
+      color: var(--gray-light);
+      overflow-x: hidden;
+    }
+
+    /* ── AMBIENT ── */
+    .ambient {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    }
+    .ambient::before {
+      content: '';
+      position: absolute;
+      top: -40vh; left: 50%; transform: translateX(-50%);
+      width: 120vw; height: 90vh;
+      background: radial-gradient(ellipse at 50% 0%,
+        rgba(0,240,255,0.055) 0%,
+        transparent 60%);
+    }
+    .ambient::after {
+      content: '';
+      position: absolute;
+      bottom: -20vh; right: -20vw;
+      width: 80vw; height: 80vh;
+      background: radial-gradient(ellipse at 100% 100%,
+        rgba(176,0,255,0.03) 0%,
+        transparent 55%);
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 2.5rem;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 1.35rem; font-weight: 900;
+      color: var(--cyan); letter-spacing: -0.02em;
+      text-decoration: none;
+      text-shadow: 0 0 24px rgba(0,240,255,0.45), 0 0 60px rgba(0,240,255,0.15);
+    }
+    .nav-cta {
+      color: var(--cyan);
+      border: 1px solid rgba(0,240,255,0.3);
+      background: transparent;
+      border-radius: 50px;
+      padding: 0.6rem 1.35rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem; font-weight: 700;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .nav-cta:hover {
+      background: rgba(0,240,255,0.07);
+      border-color: rgba(0,240,255,0.55);
+      box-shadow: 0 0 18px rgba(0,240,255,0.12);
+    }
+
+    /* ── SHARED LAYOUT ── */
+    .container {
+      max-width: 1000px; margin: 0 auto;
+      padding-left: 1.5rem; padding-right: 1.5rem;
+    }
+    section { position: relative; z-index: 1; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 92vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 6rem 1.5rem 5rem;
+    }
+    .pill {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(0,240,255,0.05);
+      border: 1px solid rgba(0,240,255,0.18);
+      border-radius: 50px; padding: 0.38rem 1rem;
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--gray-light); letter-spacing: 0.06em;
+      margin-bottom: 2.25rem;
+    }
+    .pill-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+
+    .hero-headline {
+      font-size: clamp(3rem, 9vw, 6rem);
+      font-weight: 900; line-height: 1.02;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+    .hero-headline .accent {
+      color: var(--cyan);
+      text-shadow:
+        0 0 30px rgba(0,240,255,0.5),
+        0 0 80px rgba(0,240,255,0.2);
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      color: var(--gray); max-width: 460px;
+      line-height: 1.75; margin-bottom: 2.5rem;
+    }
+
+    /* form */
+    .form-wrap { width: 100%; max-width: 430px; }
+    .form-row {
+      display: flex; gap: 0.4rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 0.38rem 0.38rem 0.38rem 1.15rem;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+    .form-row:focus-within {
+      border-color: rgba(0,240,255,0.38);
+      box-shadow: 0 0 0 3px rgba(0,240,255,0.05);
+    }
+    .form-input {
+      flex: 1; min-width: 0;
+      background: transparent; border: none; outline: none;
+      color: var(--white); font-family: 'Outfit', sans-serif;
+      font-size: 0.97rem; padding: 0.5rem 0;
+    }
+    .form-input::placeholder { color: var(--gray); }
+    .form-btn {
+      background: var(--cyan); color: var(--bg);
+      border: none; border-radius: 10px;
+      padding: 0.65rem 1.4rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.88rem; font-weight: 800;
+      cursor: pointer; white-space: nowrap; flex-shrink: 0;
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .form-btn:hover {
+      background: #33F3FF;
+      box-shadow: 0 0 22px rgba(0,240,255,0.35);
+    }
+    .form-btn:active { transform: scale(0.98); }
+    .form-note {
+      margin-top: 0.7rem; font-size: 0.78rem;
+      color: var(--gray); text-align: center;
+    }
+    .form-success {
+      display: none; margin-top: 1rem;
+      padding: 0.85rem 1.25rem;
+      background: rgba(0,240,255,0.06);
+      border: 1px solid rgba(0,240,255,0.2);
+      border-radius: 12px;
+      color: var(--cyan); font-size: 0.9rem;
+      font-weight: 600; text-align: center;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,0.015);
+    }
+    .stats-inner {
+      display: flex; justify-content: center;
+      gap: 0; flex-wrap: wrap;
+    }
+    .stat {
+      flex: 1; min-width: 160px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 2rem 1.5rem;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+    .stat-value {
+      font-size: 2.4rem; font-weight: 900;
+      color: var(--cyan); line-height: 1;
+      letter-spacing: -0.03em;
+      text-shadow: 0 0 20px rgba(0,240,255,0.3);
+    }
+    .stat-label {
+      font-size: 0.78rem; font-weight: 600;
+      color: var(--gray); letter-spacing: 0.1em;
+      text-transform: uppercase; margin-top: 0.4rem;
+    }
+
+    /* ── SECTION SHARED ── */
+    .section-label {
+      font-size: 0.72rem; font-weight: 700;
+      color: var(--cyan); letter-spacing: 0.2em;
+      text-transform: uppercase; margin-bottom: 1.25rem;
+    }
+    .section-heading {
+      font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+      font-weight: 900; color: var(--white);
+      line-height: 1.12; letter-spacing: -0.025em;
+      margin-bottom: 1.25rem;
+    }
+    .section-sub {
+      font-size: 1.05rem; color: var(--gray);
+      max-width: 520px; line-height: 1.75;
+    }
+
+    /* ── HOW IT WORKS ── */
+    .how { padding: 7rem 0; }
+    .how-header { text-align: center; margin-bottom: 4rem; }
+    .how-header .section-sub { margin: 0 auto; }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .step {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      position: relative;
+      transition: border-color 0.25s;
+    }
+    .step:hover { border-color: rgba(0,240,255,0.2); }
+    .step-num {
+      font-size: 0.72rem; font-weight: 800;
+      color: var(--cyan); letter-spacing: 0.15em;
+      text-transform: uppercase; margin-bottom: 1.25rem;
+      opacity: 0.7;
+    }
+    .step-title {
+      font-size: 1.2rem; font-weight: 800;
+      color: var(--white); margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+    .step-body {
+      font-size: 0.92rem; color: var(--gray); line-height: 1.7;
+    }
+    .step-accent {
+      position: absolute; top: 1.75rem; right: 1.75rem;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 12px var(--cyan);
+      opacity: 0.4;
+    }
+
+    /* ── WHY MIZA ── */
+    .why { padding: 7rem 0; border-top: 1px solid var(--border); }
+    .why-header { margin-bottom: 3.5rem; }
+    .features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+    }
+    .feature {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .feature:hover {
+      border-color: rgba(0,240,255,0.18);
+      background: var(--bg-hover);
+    }
+    .feature-icon {
+      font-size: 1.6rem; margin-bottom: 1rem;
+      display: block;
+    }
+    .feature-title {
+      font-size: 1.05rem; font-weight: 800;
+      color: var(--white); margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+    .feature-body {
+      font-size: 0.9rem; color: var(--gray); line-height: 1.7;
+    }
+
+    /* ── QUOTES ── */
+    .quotes { padding: 7rem 0; border-top: 1px solid var(--border); }
+    .quotes-header { text-align: center; margin-bottom: 3.5rem; }
+    .quotes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+    .quote-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2rem;
+    }
+    .quote-mark {
+      font-size: 2.5rem; line-height: 0.8;
+      color: var(--cyan); opacity: 0.25;
+      font-family: Georgia, serif;
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+    .quote-text {
+      font-size: 0.95rem; color: var(--gray-light);
+      line-height: 1.75; margin-bottom: 1.25rem;
+      font-style: italic;
+    }
+    .quote-attr {
+      font-size: 0.75rem; font-weight: 700;
+      color: var(--gray); letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── FINAL CTA ── */
+    .cta-section {
+      padding: 7rem 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 400px;
+      background: radial-gradient(ellipse at 50% 0%,
+        rgba(0,240,255,0.05) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .cta-label { margin-bottom: 1.5rem; }
+    .cta-heading {
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 900; color: var(--white);
+      letter-spacing: -0.025em; line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .cta-sub {
+      font-size: 1.05rem; color: var(--gray);
+      max-width: 440px; margin: 0 auto 2.5rem;
+      line-height: 1.75;
+    }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--cyan); color: var(--bg);
+      border: none; border-radius: 50px;
+      padding: 0.9rem 2.25rem;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem; font-weight: 800;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+      box-shadow: 0 0 30px rgba(0,240,255,0.2);
+    }
+    .cta-btn:hover {
+      background: #33F3FF;
+      box-shadow: 0 0 50px rgba(0,240,255,0.35);
+      transform: translateY(-1px);
+    }
+    .cta-btn:active { transform: translateY(0); }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 1.75rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; flex-wrap: wrap;
+    }
+    .footer-logo {
+      font-size: 1rem; font-weight: 900;
+      color: var(--cyan); letter-spacing: -0.01em;
+      text-shadow: 0 0 16px rgba(0,240,255,0.3);
+    }
+    .footer-tagline {
+      font-size: 0.75rem; font-weight: 600;
+      color: var(--gray-dark); letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .footer-copy {
+      font-size: 0.72rem; color: var(--gray-dark);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.25rem; }
+      .hero { padding: 5rem 1.25rem 4rem; min-height: 85vh; }
+      .steps { grid-template-columns: 1fr; }
+      .features { grid-template-columns: 1fr; }
+      .quotes-grid { grid-template-columns: 1fr; }
+      .stats-inner { flex-direction: column; }
+      .stat { border-right: none; border-bottom: 1px solid var(--border); padding: 1.5rem; }
+      .stat:last-child { border-bottom: none; }
+      .how, .why, .quotes, .cta-section { padding: 4.5rem 0; }
+      footer { padding: 1.25rem; flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-headline { font-size: 2.8rem; }
+      .form-btn { padding: 0.6rem 1rem; font-size: 0.82rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .pill-dot { animation: none; }
+      * { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient" aria-hidden="true"></div>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <a class="nav-logo" href="/">MIZA</a>
+    <a class="nav-cta" href="#cta">Get Early Access</a>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="pill">
+      <span class="pill-dot" aria-hidden="true"></span>
+      Coming soon
+    </div>
+
+    <h1 class="hero-headline">
+      Every Set.<br>
+      Every DJ.<br>
+      <span class="accent">One App.</span>
+    </h1>
+
+    <p class="hero-sub">
+      You already film the best moments at shows. Miza keeps them organized by artist, event, and venue so you can actually find them again.
+    </p>
+
+    <div class="form-wrap">
+      <form class="form-row" onsubmit="handleSubmit(event)">
+        <input class="form-input" type="email" name="email" placeholder="your@email.com" autocomplete="email" autocapitalize="off" required>
+        <button class="form-btn" type="submit">Join Waitlist</button>
+      </form>
+      <p class="form-note">No spam. We'll just let you know when it's ready.</p>
+      <div class="form-success" id="success-msg">You're in. We'll let you know when Miza launches.</div>
+    </div>
+  </section>
+
+  <!-- ── STATS ── -->
+  <div class="stats-bar" aria-label="Key stats">
+    <div class="stats-inner container">
+      <div class="stat">
+        <span class="stat-value">90s</span>
+        <span class="stat-label">Max clip length</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">∞</span>
+        <span class="stat-label">Stays up forever</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">$0</span>
+        <span class="stat-label">Cost to upload</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HOW IT WORKS ── -->
+  <section class="how">
+    <div class="container">
+      <div class="how-header">
+        <p class="section-label">How it works</p>
+        <h2 class="section-heading">Film it. Tag it. Done.</h2>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-accent" aria-hidden="true"></span>
+          <p class="step-num">Step 01</p>
+          <h3 class="step-title">Film the set</h3>
+          <p class="step-body">You're already doing this. Just open Miza instead of your camera. Up to 90 seconds, no editing required.</p>
+        </div>
+        <div class="step">
+          <span class="step-accent" aria-hidden="true"></span>
+          <p class="step-num">Step 02</p>
+          <h3 class="step-title">Tag who's playing</h3>
+          <p class="step-body">Pick the artist, the event, the venue. Autocomplete handles the rest. Takes like five seconds.</p>
+        </div>
+        <div class="step">
+          <span class="step-accent" aria-hidden="true"></span>
+          <p class="step-num">Step 03</p>
+          <h3 class="step-title">Find it whenever</h3>
+          <p class="step-body">Your clip shows up on the artist's page, the event page, and your own profile. Search any of it by name.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WHY MIZA ── -->
+  <section class="why">
+    <div class="container">
+      <div class="why-header">
+        <p class="section-label">Why Miza</p>
+        <h2 class="section-heading">Instagram stories disappear.<br>Your memories shouldn't.</h2>
+      </div>
+      <div class="features">
+        <div class="feature">
+          <span class="feature-icon" aria-hidden="true">🎛</span>
+          <h3 class="feature-title">Every artist has a page</h3>
+          <p class="feature-body">Search "Bicep" and find every clip fans have posted from their sets. All of them. In one place.</p>
+        </div>
+        <div class="feature">
+          <span class="feature-icon" aria-hidden="true">📍</span>
+          <h3 class="feature-title">Every event has a page</h3>
+          <p class="feature-body">Elsewhere last Saturday. That Teksupport warehouse party. One page per event with every clip the crowd filmed.</p>
+        </div>
+        <div class="feature">
+          <span class="feature-icon" aria-hidden="true">🔎</span>
+          <h3 class="feature-title">Search anything</h3>
+          <p class="feature-body">No algorithm deciding what you see. Search by artist, venue, city, or date. Think Wikipedia for shows.</p>
+        </div>
+        <div class="feature">
+          <span class="feature-icon" aria-hidden="true">📱</span>
+          <h3 class="feature-title">Use it at the show</h3>
+          <p class="feature-body">The whole thing works from your phone while you're still at the venue. No editing. Raw is better anyway.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── QUOTES ── -->
+  <section class="quotes">
+    <div class="container">
+      <div class="quotes-header">
+        <p class="section-label">Sound familiar?</p>
+        <h2 class="section-heading">Yeah, we know.</h2>
+      </div>
+      <div class="quotes-grid">
+        <div class="quote-card">
+          <span class="quote-mark" aria-hidden="true">"</span>
+          <p class="quote-text">I've got like 200 clips from shows on my phone and I couldn't tell you which DJ was playing in half of them.</p>
+          <span class="quote-attr">You, probably</span>
+        </div>
+        <div class="quote-card">
+          <span class="quote-mark" aria-hidden="true">"</span>
+          <p class="quote-text">People film my sets every night and I literally cannot find any of it. It all dies in stories.</p>
+          <span class="quote-attr">DJs everywhere</span>
+        </div>
+        <div class="quote-card">
+          <span class="quote-mark" aria-hidden="true">"</span>
+          <p class="quote-text">We put on a massive event and the only thing left after is whatever our photographer got. All the crowd footage just vanishes.</p>
+          <span class="quote-attr">Promoters who get it</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FINAL CTA ── -->
+  <section class="cta-section" id="cta">
+    <div class="container">
+      <p class="section-label cta-label">Early access</p>
+      <h2 class="cta-heading">We're building this right now.</h2>
+      <p class="cta-sub">Get in early and be one of the first to upload.</p>
+      <a class="cta-btn" href="#" onclick="document.querySelector('.hero .form-input').focus(); window.scrollTo({top:0,behavior:'smooth'}); return false;">
+        Get Early Access
+      </a>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <span class="footer-logo">MIZA</span>
+    <span class="footer-tagline">See the moment.</span>
+    <span class="footer-copy">© 2026 Miza</span>
+  </footer>
+
+  <script>
+    const submittedEmails = new Set();
+
+    async function handleSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const input = form.querySelector('input[type="email"]');
+      const btn = form.querySelector('button');
+      const email = input.value.trim().toLowerCase();
+
+      if (submittedEmails.has(email)) { showSuccess(form); return; }
+
+      const originalText = btn.textContent;
+      btn.textContent = 'Joining...';
+      btn.disabled = true;
+      input.disabled = true;
+
+      try {
+        const res = await fetch('/api/subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email })
+        });
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.error || 'Signup failed');
+        }
+        submittedEmails.add(email);
+        showSuccess(form);
+      } catch (err) {
+        console.error('Waitlist error:', err);
+        btn.textContent = originalText;
+        btn.disabled = false;
+        input.disabled = false;
+        input.style.outline = '2px solid #F97316';
+        setTimeout(() => { input.style.outline = ''; }, 2000);
+      }
+    }
+
+    function showSuccess(form) {
+      form.style.display = 'none';
+      const note = form.parentNode.querySelector('.form-note');
+      if (note) note.style.display = 'none';
+      const success = document.getElementById('success-msg');
+      if (success) success.style.display = 'block';
+    }
+  </script>
+</body>
+</html>

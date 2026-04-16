@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support & Contact - MIZA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #05050C;
+            color: #FFFFFF;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        header {
+            background-color: #0f0f1a;
+            border-bottom: 1px solid #06B6D4;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #06B6D4;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #06B6D4;
+        }
+
+        h2 {
+            font-size: 22px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #06B6D4;
+            border-bottom: 2px solid #06B6D4;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 18px;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            color: #06B6D4;
+        }
+
+        p {
+            margin-bottom: 15px;
+            color: #E8E8E8;
+        }
+
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            color: #E8E8E8;
+        }
+
+        a {
+            color: #06B6D4;
+            text-decoration: none;
+            border-bottom: 1px solid #06B6D4;
+        }
+
+        a:hover {
+            color: #00D4FF;
+        }
+
+        .contact-box {
+            background-color: #0f0f1a;
+            padding: 30px;
+            border-left: 4px solid #06B6D4;
+            margin: 30px 0;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .contact-box h3 {
+            margin-top: 0;
+        }
+
+        .contact-box a {
+            font-size: 18px;
+            color: #06B6D4;
+            border-bottom: 2px solid #06B6D4;
+        }
+
+        .faq-item {
+            background-color: #0f0f1a;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+            border-left: 3px solid #06B6D4;
+        }
+
+        .faq-item details {
+            cursor: pointer;
+        }
+
+        .faq-item summary {
+            color: #06B6D4;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 10px 0;
+            user-select: none;
+        }
+
+        .faq-item summary:hover {
+            color: #00D4FF;
+        }
+
+        .faq-item p {
+            margin-top: 15px;
+            color: #E8E8E8;
+        }
+
+        .icon {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .links-section {
+            background-color: #0f0f1a;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 4px;
+            border: 1px solid #06B6D4;
+        }
+
+        .links-section a {
+            display: inline-block;
+            margin: 10px 15px 10px 0;
+            padding: 10px 15px;
+            background-color: rgba(6, 182, 212, 0.1);
+            border: 1px solid #06B6D4;
+            border-radius: 4px;
+            color: #06B6D4;
+        }
+
+        .links-section a:hover {
+            background-color: rgba(6, 182, 212, 0.2);
+            border-bottom: 1px solid #06B6D4;
+        }
+
+        .response-time {
+            color: #999;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        footer {
+            background-color: #0f0f1a;
+            border-top: 1px solid #06B6D4;
+            padding: 30px 0;
+            margin-top: 60px;
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            h3 {
+                font-size: 16px;
+            }
+
+            .container {
+                padding: 20px 15px;
+            }
+
+            body {
+                font-size: 15px;
+            }
+
+            .contact-box {
+                padding: 20px;
+            }
+
+            .links-section a {
+                margin: 8px 10px 8px 0;
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="/" class="logo">MIZA</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Support & Contact</h1>
+        <p>We're here to help! Find answers to common questions and learn how to get in touch with our support team.</p>
+
+        <div class="contact-box">
+            <div class="icon">📧</div>
+            <h3>Get in Touch</h3>
+            <p>Have questions or need assistance? Contact us:</p>
+            <a href="mailto:support@miza.app">support@miza.app</a>
+            <p class="response-time">We respond to all inquiries within 48 hours</p>
+        </div>
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <details>
+                <summary>How do I report inappropriate or offensive content?</summary>
+                <p>If you encounter content that violates our Community Guidelines—such as harassment, explicit material, copyright infringement, or other violations—you can report it directly within the MIZA app or by emailing us at <a href="mailto:support@miza.app">support@miza.app</a> with:</p>
+                <ul>
+                    <li>The username of the content creator</li>
+                    <li>A description of the video and specific timestamp if applicable</li>
+                    <li>The reason for your report (harassment, explicit content, copyright, etc.)</li>
+                    <li>Any evidence or screenshots supporting your claim</li>
+                </ul>
+                <p>Our team reviews all reports and takes appropriate action within 24-48 hours. Content that violates our policies will be removed, and repeat offenders may have their accounts suspended or terminated.</p>
+            </details>
+        </div>
+
+        <div class="faq-item">
+            <details>
+                <summary>How do I delete my account?</summary>
+                <p>To delete your MIZA account:</p>
+                <ol>
+                    <li>Open the MIZA app and go to your profile</li>
+                    <li>Tap "Settings" or "Account Settings"</li>
+                    <li>Scroll to the bottom and select "Delete Account"</li>
+                    <li>Follow the confirmation steps (you may be asked to re-authenticate)</li>
+                    <li>Your account will be deactivated immediately</li>
+                </ol>
+                <p><strong>What happens after deletion:</strong></p>
+                <ul>
+                    <li>Your personal information (email, username, profile data) will be deleted within 30 days</li>
+                    <li>Your uploaded videos will be deleted within 30 days unless you contact us before deletion</li>
+                    <li>If you want to preserve specific videos, email <a href="mailto:support@miza.app">support@miza.app</a> before deleting your account</li>
+                    <li>Deletion is permanent and cannot be reversed</li>
+                </ul>
+                <p>If you need assistance deleting your account, contact our support team at <a href="mailto:support@miza.app">support@miza.app</a>.</p>
+            </details>
+        </div>
+
+        <div class="faq-item">
+            <details>
+                <summary>I forgot my password. How do I reset it?</summary>
+                <p>If you signed up with an email address:</p>
+                <ol>
+                    <li>On the login screen, tap "Forgot Password?"</li>
+                    <li>Enter your email address</li>
+                    <li>Check your email for a password reset link (check spam/junk folder if needed)</li>
+                    <li>Click the link and create a new password</li>
+                    <li>Log in with your new password</li>
+                </ol>
+                <p>If you signed up with Apple or Google OAuth, you can use that provider's login to access your account. If you've lost access to your OAuth provider account, contact <a href="mailto:support@miza.app">support@miza.app</a> with proof of identity.</p>
+            </details>
+        </div>
+
+        <div class="faq-item">
+            <details>
+                <summary>What video formats and specifications does MIZA support?</summary>
+                <p><strong>Supported Formats:</strong></p>
+                <ul>
+                    <li>MP4 (.mp4)</li>
+                    <li>MOV (.mov)</li>
+                    <li>WebM (.webm)</li>
+                    <li>AVI (.avi)</li>
+                    <li>MKV (.mkv)</li>
+                    <li>QuickTime (.qt)</li>
+                </ul>
+                <p><strong>Video Specifications:</strong></p>
+                <ul>
+                    <li><strong>Maximum duration:</strong> 90 seconds</li>
+                    <li><strong>Maximum file size:</strong> 500MB</li>
+                    <li><strong>Resolution:</strong> 480p minimum, 4K maximum</li>
+                    <li><strong>Frame rate:</strong> 24-60 fps recommended</li>
+                    <li><strong>Codec:</strong> H.264 or VP9 recommended</li>
+                </ul>
+                <p>Videos are automatically transcoded and optimized for different devices. Upload time depends on your internet speed and file size. For best results, use a reliable WiFi connection for uploads.</p>
+            </details>
+        </div>
+
+        <div class="faq-item">
+            <details>
+                <summary>Can I upload copyrighted music or other third-party content?</summary>
+                <p>No. You must only upload original content that you own or have explicit permission to use. This includes:</p>
+                <ul>
+                    <li>Music from third-party artists (unless you have a license)</li>
+                    <li>Footage from other creators</li>
+                    <li>Images or graphics you don't own</li>
+                    <li>Any trademarked content</li>
+                </ul>
+                <p>If your video contains copyrighted material without permission, we may:</p>
+                <ul>
+                    <li>Remove the content without notice</li>
+                    <li>Suspend your account if it's a repeat offense</li>
+                    <li>Share information with the copyright holder if requested</li>
+                </ul>
+                <p>To use copyrighted music, you must obtain a proper license from the copyright holder or a music licensing service. If you believe you have rights to use content, contact us at <a href="mailto:support@miza.app">support@miza.app</a>.</p>
+            </details>
+        </div>
+
+        <div class="faq-item">
+            <details>
+                <summary>How does MIZA handle copyright and DMCA takedown notices?</summary>
+                <p>MIZA respects intellectual property rights and follows the Digital Millennium Copyright Act (DMCA). If you believe your copyright has been infringed:</p>
+                <ol>
+                    <li>Send a DMCA takedown notice to <a href="mailto:support@miza.app">support@miza.app</a> with subject "DMCA TAKEDOWN NOTICE"</li>
+                    <li>Your notice must include:
+                        <ul>
+                            <li>Your full name, address, email, and phone</li>
+                            <li>Description of the copyrighted work</li>
+                            <li>Description of the infringing content and its location</li>
+                            <li>A statement that you have good faith belief the use is unauthorized</li>
+                            <li>Your signature (physical or electronic) under penalty of perjury</li>
+                            <li>Confirmation you are authorized to act on behalf of the copyright holder</li>
+                        </ul>
+                    </li>
+                    <li>We will remove the content within 24 hours of receiving a valid notice</li>
+                    <li>The uploader will be notified and may submit a counter-notification</li>
+                </ol>
+                <p><strong>Counter-Notification:</strong> If your content was removed due to DMCA, you may submit a counter-notification if you believe the removal was erroneous. Your counter-notice must include your statement that you consent to jurisdiction of Federal Court in New Jersey and will accept service of process.</p>
+                <p>For more details, see our <a href="/terms.html">Terms of Service</a>, Section 6.</p>
+            </details>
+        </div>
+
+        <div class="faq-item">
+            <details>
+                <summary>Why is my upload failing or taking a long time?</summary>
+                <p><strong>Common issues:</strong></p>
+                <ul>
+                    <li><strong>File too large:</strong> Maximum file size is 500MB. Compress or reduce video duration.</li>
+                    <li><strong>Unsupported format:</strong> Ensure your video is in MP4, MOV, or another supported format</li>
+                    <li><strong>Poor internet connection:</strong> Use a stable WiFi connection and avoid uploading on mobile data</li>
+                    <li><strong>Device storage full:</strong> Free up storage on your device before uploading</li>
+                    <li><strong>Video too long:</strong> Maximum duration is 90 seconds</li>
+                </ul>
+                <p><strong>Solutions:</strong></p>
+                <ol>
+                    <li>Check your internet speed using a speed test app</li>
+                    <li>Switch to WiFi if using mobile data</li>
+                    <li>Reduce video file size using a video editor (reduce resolution, bitrate, or trim length)</li>
+                    <li>Update the MIZA app to the latest version</li>
+                    <li>Restart your device and try again</li>
+                    <li>Clear the MIZA app cache (Settings > Apps > MIZA > Storage > Clear Cache)</li>
+                </ol>
+                <p>If uploads continue to fail, contact us at <a href="mailto:support@miza.app">support@miza.app</a> with details of the error message.</p>
+            </details>
+        </div>
+
+        <div class="faq-item">
+            <details>
+                <summary>How is my personal data protected on MIZA?</summary>
+                <p>Your privacy and data security are important to us. We implement industry-standard safeguards:</p>
+                <ul>
+                    <li><strong>Encryption:</strong> Data is encrypted in transit (TLS/SSL) and at rest</li>
+                    <li><strong>Authentication:</strong> Passwords are hashed and salted; OAuth is supported</li>
+                    <li><strong>Third-party services:</strong> We use trusted providers (Supabase, Cloudflare, Mux) with strict data agreements</li>
+                    <li><strong>Limited access:</strong> Only authorized personnel can access your data on a need-to-know basis</li>
+                    <li><strong>Data retention:</strong> We delete personal data when no longer needed (see <a href="/privacy.html">Privacy Policy</a>)</li>
+                </ul>
+                <p>For full details on how we collect, use, and protect your data, please review our <a href="/privacy.html">Privacy Policy</a>.</p>
+            </details>
+        </div>
+
+        <div class="faq-item">
+            <details>
+                <summary>How can I control my privacy settings?</summary>
+                <p>MIZA provides several privacy controls:</p>
+                <ul>
+                    <li><strong>Profile visibility:</strong> Make your profile public or private through account settings</li>
+                    <li><strong>Location:</strong> Location is optional; you can choose not to share it</li>
+                    <li><strong>Genre preferences:</strong> Manage your interests in settings</li>
+                    <li><strong>Data access:</strong> You can request a copy of your personal data (see <a href="/privacy.html">Privacy Policy</a>)</li>
+                    <li><strong>Cookie preferences:</strong> Manage cookie settings in your browser</li>
+                </ul>
+                <p>For questions about your data or privacy rights, contact us at <a href="mailto:support@miza.app">support@miza.app</a>.</p>
+            </details>
+        </div>
+
+        <div class="faq-item">
+            <details>
+                <summary>I'm concerned about a child using MIZA. What should I know?</summary>
+                <p>MIZA is designed for users 13 and older. If you're a parent or guardian:</p>
+                <ul>
+                    <li><strong>Age requirement:</strong> MIZA requires users to be at least 13 years old</li>
+                    <li><strong>Parental consent:</strong> If your child is under 18, they should have your permission to use the app</li>
+                    <li><strong>Data collection:</strong> We collect minimal data from young users and comply with COPPA regulations</li>
+                    <li><strong>Content moderation:</strong> We actively moderate content to prevent harmful, explicit, or abusive material</li>
+                    <li><strong>Report violations:</strong> If you encounter inappropriate content, report it immediately to <a href="mailto:support@miza.app">support@miza.app</a></li>
+                </ul>
+                <p>For more information about child safety and data protection, see our <a href="/privacy.html">Privacy Policy</a>, Section 8.4 (COPPA Compliance).</p>
+            </details>
+        </div>
+
+        <h2>Additional Resources</h2>
+
+        <div class="links-section">
+            <p>Additional information about MIZA:</p>
+            <a href="/privacy.html">Privacy Policy</a>
+            <a href="/terms.html">Terms of Service</a>
+        </div>
+
+        <h2>Still Need Help?</h2>
+
+        <p>If you couldn't find the answer you're looking for, our support team is ready to help. Send us an email with:</p>
+        <ul>
+            <li>A clear description of your issue</li>
+            <li>Steps you've already tried</li>
+            <li>Any error messages you received</li>
+            <li>Your device model and MIZA app version (found in app settings)</li>
+        </ul>
+
+        <div class="contact-box">
+            <h3>Contact Our Support Team</h3>
+            <a href="mailto:support@miza.app">support@miza.app</a>
+            <p class="response-time">Average response time: 24-48 hours</p>
+        </div>
+
+        <h2>Company Information</h2>
+
+        <p><strong>MIZA LLC</strong> is incorporated in New Jersey and is committed to providing a safe, secure, and enjoyable platform for music video creators and enthusiasts.</p>
+
+        <ul>
+            <li><strong>Headquarters:</strong> New Jersey, USA</li>
+            <li><strong>Support Email:</strong> <a href="mailto:support@miza.app">support@miza.app</a></li>
+            <li><strong>Operating Since:</strong> 2026</li>
+        </ul>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 MIZA LLC. All rights reserved. | <a href="/privacy.html" style="border: none;">Privacy Policy</a> | <a href="/terms.html" style="border: none;">Terms of Service</a></p>
+    </footer>
+</body>
+</html>
