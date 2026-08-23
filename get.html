@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIZA — See the moment</title>
+  <!-- Fallback landing for shared profile links (/u/:username) when the
+       app isn't installed. Universal links open the app when it is. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Outfit', system-ui, sans-serif;
+      background: #09090F; color: #F4F4F5;
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 32px 24px;
+    }
+    .wordmark { font-size: 40px; font-weight: 800; letter-spacing: 4px; }
+    .tag { margin-top: 8px; font-size: 15px; color: #A1A1AA; }
+    .handle { margin-top: 28px; font-size: 17px; font-weight: 600; }
+    .sub { margin-top: 6px; font-size: 13.5px; color: #71717A; max-width: 300px; line-height: 1.5; }
+    .cta {
+      margin-top: 32px; display: inline-block; padding: 15px 40px; border-radius: 999px;
+      background: #06B6D4; color: #09090F; font-weight: 800; font-size: 15px;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="wordmark">MIZA</div>
+  <div class="tag">See the moment.</div>
+  <div class="handle" id="handle"></div>
+  <div class="sub">Clips from real nights out — the sets, the drops, the crowd. Coming soon to the App Store.</div>
+  <a class="cta" href="/">Learn more</a>
+  <script>
+    var parts = location.pathname.split('/').filter(Boolean);
+    if (parts[0] === 'u' && parts[1]) {
+      document.getElementById('handle').textContent = '@' + decodeURIComponent(parts[1]) + ' is on MIZA';
+    }
+  </script>
+</body>
+</html>

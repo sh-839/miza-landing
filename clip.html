@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>MIZA — See the moment</title>
+  <!-- Shared-clip fallback page (Aug 23 2026). When the MIZA app is
+       installed, iOS universal links open /clip/:id in the app and this
+       page is never seen. Everyone else lands here: the clip plays in the
+       browser with a Get-MIZA call to action. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Outfit', system-ui, sans-serif;
+      background: #09090F; color: #F4F4F5;
+      min-height: 100vh; min-height: 100dvh;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .top { padding: 18px 20px 8px; display: flex; align-items: center; gap: 8px; }
+    .wordmark { font-size: 22px; font-weight: 800; letter-spacing: 2px; }
+    .stage {
+      flex: 1; width: 100%; max-width: 430px;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 12px 16px 8px;
+    }
+    .player-wrap {
+      position: relative; width: 100%; aspect-ratio: 9 / 16; max-height: 66vh;
+      border-radius: 16px; overflow: hidden; background: #12121A;
+    }
+    video { width: 100%; height: 100%; object-fit: cover; background: #000; }
+    .meta { padding: 14px 4px 0; }
+    .caption { font-size: 15px; font-weight: 600; line-height: 1.35; }
+    .sub { margin-top: 4px; font-size: 13px; color: #A1A1AA; }
+    .cta-block { width: 100%; max-width: 430px; padding: 10px 16px calc(20px + env(safe-area-inset-bottom)); }
+    .cta {
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; padding: 15px; border-radius: 999px;
+      background: #06B6D4; color: #09090F; font-weight: 800; font-size: 15px;
+      text-decoration: none; letter-spacing: -0.2px;
+    }
+    .cta-sub { margin-top: 10px; text-align: center; font-size: 12.5px; color: #71717A; }
+    .err { text-align: center; padding: 40px 24px; color: #A1A1AA; font-size: 14px; line-height: 1.5; }
+    .spinner {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      color: #71717A; font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="top"><span class="wordmark">MIZA</span></div>
+
+  <div class="stage">
+    <div class="player-wrap" id="playerWrap">
+      <div class="spinner" id="spinner">Loading clip…</div>
+    </div>
+    <div class="meta" id="meta" style="display:none">
+      <div class="caption" id="caption"></div>
+      <div class="sub" id="sub"></div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <a class="cta" id="openApp" href="#">Open in MIZA</a>
+    <div class="cta-sub">MIZA — clips from real nights out. Coming soon to the App Store.</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1/dist/hls.min.js"></script>
+  <script>
+    (function () {
+      var API = 'https://miza-backend-production.up.railway.app';
+      // Works for /clip/:id and /video/:id (both rewritten here)
+      var parts = location.pathname.split('/').filter(Boolean);
+      var clipId = parts[1] || '';
+      var wrap = document.getElementById('playerWrap');
+      var spinner = document.getElementById('spinner');
+
+      // Try to hand off to the app via its custom scheme; harmless no-op
+      // when the app isn't installed (universal links handle the installed
+      // case before this page even loads).
+      document.getElementById('openApp').addEventListener('click', function (e) {
+        e.preventDefault();
+        location.href = 'miza://video/' + clipId;
+      });
+
+      if (!clipId) { spinner.textContent = 'Clip not found.'; return; }
+
+      fetch(API + '/api/clips/' + encodeURIComponent(clipId))
+        .then(function (r) { if (!r.ok) throw new Error('not found'); return r.json(); })
+        .then(function (d) {
+          var clip = d.clip || {};
+          var src = clip.video_url;
+          var poster = clip.thumbnail_url || '';
+          var video = document.createElement('video');
+          video.setAttribute('playsinline', '');
+          video.setAttribute('controls', '');
+          video.muted = true;
+          video.autoplay = true;
+          video.loop = true;
+          if (poster) video.poster = poster;
+
+          if (src && src.indexOf('.m3u8') !== -1 && !video.canPlayType('application/vnd.apple.mpegurl') && window.Hls && Hls.isSupported()) {
+            var hls = new Hls();
+            hls.loadSource(src);
+            hls.attachMedia(video);
+          } else if (src) {
+            video.src = src;
+          }
+          spinner.remove();
+          wrap.appendChild(video);
+
+          var uploader = clip.uploader || {};
+          var caption = clip.caption || '';
+          var meta = document.getElementById('meta');
+          meta.style.display = 'block';
+          document.getElementById('caption').textContent = caption || 'A moment on MIZA';
+          var bits = [];
+          if (uploader.username) bits.push('@' + uploader.username);
+          if (clip.venue && clip.venue.name) bits.push(clip.venue.name);
+          if (clip.artist && clip.artist.name) bits.push(clip.artist.name);
+          document.getElementById('sub').textContent = bits.join(' · ');
+          document.title = (bits[0] ? bits[0] + ' on MIZA' : 'MIZA');
+        })
+        .catch(function () {
+          spinner.textContent = 'This clip is no longer available.';
+        });
+    })();
+  </script>
+</body>
+</html>

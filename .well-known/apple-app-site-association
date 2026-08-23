@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["5L9K6FX8FB.app.miza.mobile"],
+        "components": [
+          { "/": "/clip/*" },
+          { "/": "/video/*" },
+          { "/": "/u/*" }
+        ]
+      }
+    ]
+  }
+}
