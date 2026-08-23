@@ -1,16 +1,31 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/clip/:id", "destination": "/clip.html" },
-    { "source": "/video/:id", "destination": "/clip.html" },
-    { "source": "/u/:username", "destination": "/get.html" }
+    {
+      "source": "/clip/:id",
+      "destination": "/clip"
+    },
+    {
+      "source": "/video/:id",
+      "destination": "/clip"
+    },
+    {
+      "source": "/u/:username",
+      "destination": "/get"
+    }
   ],
   "headers": [
     {
       "source": "/.well-known/apple-app-site-association",
       "headers": [
-        { "key": "Content-Type", "value": "application/json" },
-        { "key": "Cache-Control", "value": "public, max-age=3600" }
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600"
+        }
       ]
     }
   ]
