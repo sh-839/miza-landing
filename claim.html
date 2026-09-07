@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MIZA: Claim your page</title>
+  <!-- Fallback for invite links (/claim/:code) when the app is not
+       installed. With the app installed the universal link opens the
+       claim screen directly with the code filled in. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Outfit', system-ui, sans-serif;
+      background: #09090F; color: #F4F4F5;
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 32px 24px;
+    }
+    .wordmark { font-size: 40px; font-weight: 800; letter-spacing: 4px; }
+    .tag { margin-top: 8px; font-size: 15px; color: #A1A1AA; }
+    .title { margin-top: 28px; font-size: 20px; font-weight: 600; }
+    .code {
+      margin-top: 14px; font-size: 22px; font-weight: 800; letter-spacing: 2px;
+      padding: 14px 22px; border-radius: 16px; background: #14141C; border: 1px solid rgba(255,255,255,0.08);
+      font-variant-numeric: tabular-nums;
+    }
+    .sub { margin-top: 16px; font-size: 13.5px; color: #71717A; max-width: 320px; line-height: 1.5; }
+    .cta {
+      margin-top: 28px; display: inline-block; padding: 15px 40px; border-radius: 999px;
+      background: #06B6D4; color: #09090F; font-weight: 800; font-size: 15px;
+      text-decoration: none;
+    }
+    .open { margin-top: 14px; font-size: 13.5px; color: #06B6D4; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="wordmark">MIZA</div>
+  <div class="tag">See the moment.</div>
+  <div class="title">Claim your page on MIZA</div>
+  <div class="code" id="code"></div>
+  <div class="sub">Install MIZA, sign in or create an account, then open this link again or enter the code under Profile, Claim your page.</div>
+  <a class="cta" href="/">Get the app</a>
+  <a class="open" id="open" href="#">Already installed? Open in MIZA</a>
+  <script>
+    var parts = location.pathname.split('/').filter(Boolean);
+    var code = parts[0] === 'claim' && parts[1] ? decodeURIComponent(parts[1]) : '';
+    document.getElementById('code').textContent = code || 'No code in this link';
+    document.getElementById('open').href = 'miza://claim/' + encodeURIComponent(code);
+  </script>
+</body>
+</html>

@@ -12,6 +12,10 @@
     {
       "source": "/u/:username",
       "destination": "/get"
+    },
+    {
+      "source": "/claim/:code",
+      "destination": "/claim"
     }
   ],
   "headers": [
